@@ -4,9 +4,9 @@ from pyspark.sql.functions import sum, count
 spark = SparkSession.builder.getOrCreate()
 
 # Read Silver table
-df = spark.table("main.default.silver_sales")
+df = spark.table("workspace.default.silver_sales")
 
-# Aggregate sales by product
+# Create business-level aggregation
 gold_df = (
     df.groupBy("product_id")
       .agg(
@@ -20,7 +20,8 @@ gold_df = (
     gold_df.write
     .format("delta")
     .mode("overwrite")
-    .saveAsTable("main.default.gold_product_sales")
+    .saveAsTable("workspace.default.gold_product_sales")
 )
 
-print("Gold aggregation completed successfully.")
+print("Aggregation completed successfully.")
+print(f"Products processed: {gold_df.count()}")
