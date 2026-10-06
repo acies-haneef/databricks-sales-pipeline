@@ -2,18 +2,10 @@ from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.getOrCreate()
 
-# Source data stored in Unity Catalog Volume
-source_path = "/Volumes/workspace/default/sales"
+# Read source sales table
+df = spark.table("workspace.default.sales")
 
-# Read raw sales data
-df = (
-    spark.read
-    .option("header", "true")
-    .option("inferSchema", "true")
-    .csv(source_path)
-)
-
-# Write Bronze table
+# Write to Bronze table
 (
     df.write
     .format("delta")
