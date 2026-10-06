@@ -3,7 +3,7 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder.getOrCreate()
 
 # Source data stored in Unity Catalog Volume
-source_path = "/Volumes/workspace/default/sales.csv"
+source_path = "/Volumes/workspace/default/sales"
 
 # Read raw sales data
 df = (
